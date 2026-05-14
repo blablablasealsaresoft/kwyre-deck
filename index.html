@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>VILLAGER — Seed Deck</title>
+<title>VILLAGER — Confidential</title>
+<meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root{
@@ -12,6 +13,22 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;line-height:1.5}
+
+  /* Password gate */
+  #gate{position:fixed;inset:0;background:radial-gradient(circle at top left,rgba(34,211,238,.15),transparent 50%),radial-gradient(circle at bottom right,rgba(168,85,247,.15),transparent 50%),var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999}
+  #gate-box{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:48px;max-width:440px;width:90%;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,.8)}
+  #gate-brand{font-weight:700;color:var(--accent);letter-spacing:3px;font-size:13px;margin-bottom:24px}
+  #gate-title{font-size:36px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+  #gate-sub{color:var(--muted);margin-bottom:32px;font-size:15px}
+  #pw{width:100%;padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;font-family:inherit;outline:none;transition:border-color .2s}
+  #pw:focus{border-color:var(--accent)}
+  #gate-btn{margin-top:16px;width:100%;padding:14px;background:var(--accent);color:var(--bg);border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:0.5px;transition:transform .1s}
+  #gate-btn:hover{transform:translateY(-1px)}
+  #gate-btn:active{transform:translateY(0)}
+  #gate-err{color:var(--bad);margin-top:14px;font-size:14px;min-height:20px;font-weight:500}
+  #gate-foot{margin-top:32px;color:var(--muted);font-size:12px;line-height:1.6}
+  #content{display:none}
+
   .slide{min-height:100vh;padding:60px 80px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);scroll-snap-align:start;position:relative}
   .slide-num{position:absolute;top:20px;right:30px;color:var(--muted);font-size:13px;letter-spacing:2px}
   .brand{position:absolute;top:20px;left:30px;font-weight:700;color:var(--accent);letter-spacing:3px;font-size:13px}
@@ -48,10 +65,25 @@
   .meta strong{color:var(--text);display:block;font-size:18px}
   .quote{font-style:italic;color:var(--accent3);font-size:20px;padding:20px;border-left:4px solid var(--accent3);background:rgba(245,158,11,.05);margin:16px 0}
   .highlight{background:linear-gradient(transparent 60%,rgba(34,211,238,.3) 60%);padding:0 2px}
-  @media print{.slide{page-break-after:always;min-height:0}}
+  @media print{#gate{display:none!important}#content{display:block!important}.slide{page-break-after:always;min-height:0}}
 </style>
 </head>
 <body>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div id="gate-box">
+    <div id="gate-brand">KWYRE · APOLLO VILLAGER</div>
+    <div id="gate-title">Confidential</div>
+    <div id="gate-sub">This deck is shared with prospective investors only. Enter the access password to continue.</div>
+    <input id="pw" type="password" placeholder="Access password" autofocus autocomplete="off">
+    <button id="gate-btn" onclick="checkPw()">Unlock</button>
+    <div id="gate-err"></div>
+    <div id="gate-foot">By accessing this material you agree to treat its contents as confidential. Do not redistribute.</div>
+  </div>
+</div>
+
+<div id="content">
 
 <!-- 1 COVER -->
 <section class="slide cover">
@@ -76,11 +108,11 @@
   <h2>Every AI agent in production is one email away from being weaponized.</h2>
   <div class="grid g3">
     <div class="card"><div class="stat bad">50–84%</div><div class="stat-label">Documented prompt-injection success rate; 100% in some commercial systems</div></div>
-    <div class="card"><div class="stat bad">#1</div><div class="stat-label">OWASP LLM Top 10 (2025) AND OWASP Agentic Top 10 (2026) — for the second consecutive edition</div></div> 
+    <div class="card"><div class="stat bad">#1</div><div class="stat-label">OWASP LLM Top 10 (2025) AND OWASP Agentic Top 10 (2026) — for the second consecutive edition</div></div>
     <div class="card"><div class="stat bad">97%</div><div class="stat-label">Of organizations that suffered AI-related breaches lacked AI access controls — IBM 2025</div></div>
   </div>
   <div class="quote">"Prompt injection in AI browsers may never be fully patched." — OpenAI, Feb 13, 2026<br>"LLMs are inherently confusable deputies." — UK NCSC, Dec 2025</div>
-  <p style="margin-top:20px;color:var(--muted);max-width:1000px">LLMs cannot architecturally distinguish trusted instructions from untrusted data.  Every web page, email, document, MCP response, browser DOM node, and tool output can carry hidden commands. Today's defenses — classifiers, regex, and "guardrails" — score text and miss the underlying architecture problem.</p>
+  <p style="margin-top:20px;color:var(--muted);max-width:1000px">LLMs cannot architecturally distinguish trusted instructions from untrusted data. Every web page, email, document, MCP response, browser DOM node, and tool output can carry hidden commands. Today's defenses — classifiers, regex, and "guardrails" — score text and miss the underlying architecture problem.</p>
 </section>
 
 <!-- 3 WHY NOW -->
@@ -91,20 +123,20 @@
   <div class="grid g2">
     <div>
       <div class="timeline">
-        <div class="timeline-item"><div class="timeline-date">JUN 11, 2025</div><div class="timeline-event"><strong>EchoLeak (CVE-2025-32711, CVSS 9.3)</strong> — first zero-click prompt injection in production AI (Microsoft 365 Copilot).  One email = silent exfiltration.</div></div>
-        <div class="timeline-item"><div class="timeline-date">AUG 27, 2025</div><div class="timeline-event"><strong>Anthropic GTG-2002 "Vibe Hacking"</strong> — single criminal extorted ≥17 orgs in one month  using Claude; ransoms >$500K.</div></div> 
-        <div class="timeline-item"><div class="timeline-date">NOV 5, 2025</div><div class="timeline-event"><strong>Google GTIG: PROMPTSTEAL + PROMPTFLUX</strong> — APT28 malware queries Qwen mid-attack;  self-modifying VBScript calls Gemini hourly.</div></div> 
-        <div class="timeline-item"><div class="timeline-date">NOV 13, 2025</div><div class="timeline-event"><strong>Anthropic GTG-1002</strong> — first AI-orchestrated state cyber-espionage at scale. ~30 targets. <span class="highlight">80–90% executed autonomously by Claude  via MCP.</span></div></div>
+        <div class="timeline-item"><div class="timeline-date">JUN 11, 2025</div><div class="timeline-event"><strong>EchoLeak (CVE-2025-32711, CVSS 9.3)</strong> — first zero-click prompt injection in production AI (Microsoft 365 Copilot). One email = silent exfiltration.</div></div>
+        <div class="timeline-item"><div class="timeline-date">AUG 27, 2025</div><div class="timeline-event"><strong>Anthropic GTG-2002 "Vibe Hacking"</strong> — single criminal extorted ≥17 orgs in one month using Claude; ransoms >$500K.</div></div>
+        <div class="timeline-item"><div class="timeline-date">NOV 5, 2025</div><div class="timeline-event"><strong>Google GTIG: PROMPTSTEAL + PROMPTFLUX</strong> — APT28 malware queries Qwen mid-attack; self-modifying VBScript calls Gemini hourly.</div></div>
+        <div class="timeline-item"><div class="timeline-date">NOV 13, 2025</div><div class="timeline-event"><strong>Anthropic GTG-1002</strong> — first AI-orchestrated state cyber-espionage at scale. ~30 targets. <span class="highlight">80–90% executed autonomously by Claude via MCP.</span></div></div>
         <div class="timeline-item"><div class="timeline-date">FEB 13, 2026</div><div class="timeline-event"><strong>OpenAI "Lockdown Mode"</strong> — public admission the problem may never be fully fixed.</div></div>
       </div>
     </div>
     <div>
       <div class="card"><h3 style="color:var(--accent3)">Regulators armed</h3>
         <ul>
-          <li><strong>EU AI Act:</strong> Penalty regime live Aug 2025 (€35M / 7% global turnover); full applicability Aug 2, 2026</li> 
-          <li><strong>HIPAA Security Rule overhaul:</strong> OCR final rule on May 2026 agenda; $9B first-year compliance</li> 
+          <li><strong>EU AI Act:</strong> Penalty regime live Aug 2025 (€35M / 7% global turnover); full applicability Aug 2, 2026</li>
+          <li><strong>HIPAA Security Rule overhaul:</strong> OCR final rule on May 2026 agenda; $9B first-year compliance</li>
           <li><strong>NIST AI 600-1 + Critical Infrastructure Profile</strong> (April 2026)</li>
-          <li><strong>SEC Item 1.05:</strong> 4-day cyber-incident disclosure for public co's</li> 
+          <li><strong>SEC Item 1.05:</strong> 4-day cyber-incident disclosure for public co's</li>
         </ul>
       </div>
       <div class="card" style="margin-top:20px"><h3 style="color:var(--accent2)">Budgets followed</h3>
@@ -376,64 +408,108 @@
   <p style="margin-top:60px;color:var(--muted);font-size:13px;max-width:900px">Sources cited throughout: Grand View Research · Mordor Intelligence · Precedence Research · Vectra AI · Menlo Ventures · Digital Applied · OWASP GenAI · NIST · OCR/HHS · EU Commission · Anthropic Threat Intelligence Reports (Aug + Nov 2025) · Google GTIG AI Threat Tracker (Nov 2025) · IBM Cost of a Data Breach 2025 · Carta · CB Insights · DataTribe · TechCrunch · Calcalist · SecurityWeek · GeekWire · SEC 8-K filings (PANW, SentinelOne, F5).</p>
 </section>
 
+</div><!-- /content -->
+
 <script>
-Chart.defaults.color='#94a3b8';Chart.defaults.borderColor='#1f2937';Chart.defaults.font.family='-apple-system,BlinkMacSystemFont,Inter,sans-serif';
+// Password gate — SHA-256 hash of "kwyrepitch"
+const PW_HASH = "0ec6a06b8a8790625118817cbf4b0bc14095bdf0578be59a1bffe2d95e8f6c72";
 
-new Chart(document.getElementById('tamChart'),{
-  type:'bar',
-  data:{labels:['Consumer','Healthcare','AI Platform B2B'],
-    datasets:[
-      {label:'TAM ($B)',data:[240,22,5.5],backgroundColor:'rgba(168,85,247,0.6)'},
-      {label:'SAM ($B)',data:[16,2.5,0.29],backgroundColor:'rgba(34,211,238,0.6)'},
-      {label:'5-yr SOM ($M)',data:[0.13,0.05,0.02],backgroundColor:'rgba(245,158,11,0.8)'}
-    ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{title:{display:true,text:'TAM / SAM / SOM by segment ($B)',color:'#e5e7eb',font:{size:16}}},
-    scales:{y:{type:'logarithmic',title:{display:true,text:'$ Billions (log scale)'}}}}
+async function sha256(str){
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+async function checkPw(){
+  const input = document.getElementById("pw").value;
+  const err = document.getElementById("gate-err");
+  err.textContent = "";
+  if(!input){ err.textContent = "Enter the password."; return; }
+  const h = await sha256(input);
+  if(h === PW_HASH){
+    sessionStorage.setItem("villager_unlocked","1");
+    showContent();
+  } else {
+    err.textContent = "Incorrect password.";
+    document.getElementById("pw").value = "";
+  }
+}
+
+function showContent(){
+  document.getElementById("gate").style.display = "none";
+  document.getElementById("content").style.display = "block";
+  initCharts();
+}
+
+document.getElementById("pw").addEventListener("keydown", e => {
+  if(e.key === "Enter") checkPw();
 });
 
-new Chart(document.getElementById('aptChart'),{
-  type:'bar',
-  data:{labels:['Iran\nAPT35','India\nNTRO','China\nAPT41','N. Korea\nLazarus','Turkey\nMIT','Russia\nAPT28/29'],
-    datasets:[{label:'Attacker withdrawal rate (%)',
-      data:[100,82,80,75,75,65],
-      backgroundColor:['#10b981','#22d3ee','#22d3ee','#a855f7','#a855f7','#f59e0b']}]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{title:{display:true,text:'Attacker withdrawal — 6-nation APT simulation (avg 79.2%)',color:'#e5e7eb',font:{size:16}},legend:{display:false}},
-    scales:{y:{min:0,max:100,title:{display:true,text:'% Withdrawal'}}}}
-});
+// Auto-unlock if already authenticated this session
+if(sessionStorage.getItem("villager_unlocked") === "1"){
+  showContent();
+}
 
-new Chart(document.getElementById('arrChart'),{
-  type:'line',
-  data:{labels:['Y1','Y2','Y3','Y4','Y5'],
-    datasets:[
-      {label:'Bull',data:[3.75,20.4,65.9,159.5,334],borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.1)',tension:0.3,fill:true,borderWidth:3},
-      {label:'Base',data:[1.6,8.6,27.9,71.0,136.5],borderColor:'#22d3ee',backgroundColor:'rgba(34,211,238,0.15)',tension:0.3,fill:true,borderWidth:3},
-      {label:'Bear',data:[0.32,1.6,4.5,13.2,27.4],borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.1)',tension:0.3,fill:true,borderWidth:3}
-    ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{title:{display:true,text:'5-year ARR projection ($M)',color:'#e5e7eb',font:{size:16}}},
-    scales:{y:{title:{display:true,text:'ARR ($M)'}}}}
-});
+function initCharts(){
+  if(typeof Chart === "undefined") return;
+  Chart.defaults.color='#94a3b8';Chart.defaults.borderColor='#1f2937';Chart.defaults.font.family='-apple-system,BlinkMacSystemFont,Inter,sans-serif';
 
-new Chart(document.getElementById('mixChart'),{
-  type:'doughnut',
-  data:{labels:['Consumer $72M','Healthcare $30M','AI Platform B2B $34.5M'],
-    datasets:[{data:[72,30,34.5],backgroundColor:['#22d3ee','#a855f7','#f59e0b'],borderWidth:0}]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:8}}}}
-});
+  new Chart(document.getElementById('tamChart'),{
+    type:'bar',
+    data:{labels:['Consumer','Healthcare','AI Platform B2B'],
+      datasets:[
+        {label:'TAM ($B)',data:[240,22,5.5],backgroundColor:'rgba(168,85,247,0.6)'},
+        {label:'SAM ($B)',data:[16,2.5,0.29],backgroundColor:'rgba(34,211,238,0.6)'},
+        {label:'5-yr SOM ($M)',data:[0.13,0.05,0.02],backgroundColor:'rgba(245,158,11,0.8)'}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{title:{display:true,text:'TAM / SAM / SOM by segment ($B)',color:'#e5e7eb',font:{size:16}}},
+      scales:{y:{type:'logarithmic',title:{display:true,text:'$ Billions (log scale)'}}}}
+  });
 
-new Chart(document.getElementById('exitChart'),{
-  type:'bar',
-  data:{labels:['Wiz/Google','CyberArk/PANW','Protect AI/PANW','Attivo/S1','Robust/Cisco','Aim/Cato','Lakera/CheckP','Pangea/CRWD','Prompt/S1','Calypso/F5','Apex/Tenable'],
-    datasets:[{label:'Exit price ($M)',
-      data:[32000,25000,635,616,400,350,300,260,250,180,100],
-      backgroundColor:['#a855f7','#a855f7','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee']}]},
-  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
-    plugins:{title:{display:true,text:'AI / Cyber security M&A exits 2022–2026 ($M, log scale)',color:'#e5e7eb',font:{size:16}},legend:{display:false}},
-    scales:{x:{type:'logarithmic',title:{display:true,text:'$ Millions (log)'}}}}
-});
+  new Chart(document.getElementById('aptChart'),{
+    type:'bar',
+    data:{labels:['Iran\nAPT35','India\nNTRO','China\nAPT41','N. Korea\nLazarus','Turkey\nMIT','Russia\nAPT28/29'],
+      datasets:[{label:'Attacker withdrawal rate (%)',
+        data:[100,82,80,75,75,65],
+        backgroundColor:['#10b981','#22d3ee','#22d3ee','#a855f7','#a855f7','#f59e0b']}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{title:{display:true,text:'Attacker withdrawal — 6-nation APT simulation (avg 79.2%)',color:'#e5e7eb',font:{size:16}},legend:{display:false}},
+      scales:{y:{min:0,max:100,title:{display:true,text:'% Withdrawal'}}}}
+  });
+
+  new Chart(document.getElementById('arrChart'),{
+    type:'line',
+    data:{labels:['Y1','Y2','Y3','Y4','Y5'],
+      datasets:[
+        {label:'Bull',data:[3.75,20.4,65.9,159.5,334],borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.1)',tension:0.3,fill:true,borderWidth:3},
+        {label:'Base',data:[1.6,8.6,27.9,71.0,136.5],borderColor:'#22d3ee',backgroundColor:'rgba(34,211,238,0.15)',tension:0.3,fill:true,borderWidth:3},
+        {label:'Bear',data:[0.32,1.6,4.5,13.2,27.4],borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.1)',tension:0.3,fill:true,borderWidth:3}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{title:{display:true,text:'5-year ARR projection ($M)',color:'#e5e7eb',font:{size:16}}},
+      scales:{y:{title:{display:true,text:'ARR ($M)'}}}}
+  });
+
+  new Chart(document.getElementById('mixChart'),{
+    type:'doughnut',
+    data:{labels:['Consumer $72M','Healthcare $30M','AI Platform B2B $34.5M'],
+      datasets:[{data:[72,30,34.5],backgroundColor:['#22d3ee','#a855f7','#f59e0b'],borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:8}}}}
+  });
+
+  new Chart(document.getElementById('exitChart'),{
+    type:'bar',
+    data:{labels:['Wiz/Google','CyberArk/PANW','Protect AI/PANW','Attivo/S1','Robust/Cisco','Aim/Cato','Lakera/CheckP','Pangea/CRWD','Prompt/S1','Calypso/F5','Apex/Tenable'],
+      datasets:[{label:'Exit price ($M)',
+        data:[32000,25000,635,616,400,350,300,260,250,180,100],
+        backgroundColor:['#a855f7','#a855f7','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee']}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{title:{display:true,text:'AI / Cyber security M&A exits 2022–2026 ($M, log scale)',color:'#e5e7eb',font:{size:16}},legend:{display:false}},
+      scales:{x:{type:'logarithmic',title:{display:true,text:'$ Millions (log)'}}}}
+  });
+}
 </script>
 </body>
 </html>
