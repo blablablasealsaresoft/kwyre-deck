@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VILLAGER — Seed Deck</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0a0e1a; --bg2:#111827; --panel:#151b2e; --accent:#22d3ee;
+    --accent2:#a855f7; --accent3:#f59e0b; --text:#e5e7eb; --muted:#94a3b8;
+    --good:#10b981; --bad:#ef4444; --border:#1f2937;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;line-height:1.5}
+  .slide{min-height:100vh;padding:60px 80px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--border);scroll-snap-align:start;position:relative}
+  .slide-num{position:absolute;top:20px;right:30px;color:var(--muted);font-size:13px;letter-spacing:2px}
+  .brand{position:absolute;top:20px;left:30px;font-weight:700;color:var(--accent);letter-spacing:3px;font-size:13px}
+  h1{font-size:64px;line-height:1.05;font-weight:800;margin-bottom:24px;letter-spacing:-1px}
+  h2{font-size:42px;line-height:1.1;font-weight:700;margin-bottom:32px;letter-spacing:-0.5px}
+  h3{font-size:22px;font-weight:600;color:var(--accent);margin-bottom:14px;text-transform:uppercase;letter-spacing:1.5px}
+  p,li{font-size:18px;color:var(--text);margin-bottom:12px}
+  .lede{font-size:24px;color:var(--muted);max-width:900px;margin-bottom:20px}
+  .grid{display:grid;gap:24px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px}
+  .card.accent{border-color:var(--accent)}
+  .stat{font-size:48px;font-weight:800;color:var(--accent);line-height:1}
+  .stat.purple{color:var(--accent2)}.stat.amber{color:var(--accent3)}.stat.good{color:var(--good)}.stat.bad{color:var(--bad)}
+  .stat-label{font-size:14px;color:var(--muted);margin-top:8px;text-transform:uppercase;letter-spacing:1px}
+  .pill{display:inline-block;padding:4px 12px;background:rgba(34,211,238,.1);color:var(--accent);border-radius:999px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--accent);font-weight:600;text-transform:uppercase;font-size:12px;letter-spacing:1px}
+  td.check{color:var(--good);font-weight:700}td.x{color:var(--bad);font-weight:700}
+  td.partial{color:var(--accent3)}
+  .chart-wrap{position:relative;height:380px;margin-top:16px}
+  .timeline{border-left:3px solid var(--accent);padding-left:24px;margin-left:8px}
+  .timeline-item{margin-bottom:18px;position:relative}
+  .timeline-item::before{content:"";position:absolute;left:-32px;top:6px;width:14px;height:14px;background:var(--accent);border-radius:50%}
+  .timeline-date{color:var(--accent3);font-weight:700;font-size:13px;letter-spacing:1px}
+  .timeline-event{font-size:16px;margin-top:2px}
+  ul{padding-left:20px}
+  .footer{position:absolute;bottom:20px;left:80px;right:80px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between}
+  .cover{background:radial-gradient(circle at top left,rgba(34,211,238,.15),transparent 50%),radial-gradient(circle at bottom right,rgba(168,85,247,.15),transparent 50%),var(--bg)}
+  .cover h1{font-size:84px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .tagline{font-size:28px;color:var(--text);margin-bottom:40px;font-weight:300}
+  .meta{display:flex;gap:40px;margin-top:60px;color:var(--muted);font-size:15px}
+  .meta strong{color:var(--text);display:block;font-size:18px}
+  .quote{font-style:italic;color:var(--accent3);font-size:20px;padding:20px;border-left:4px solid var(--accent3);background:rgba(245,158,11,.05);margin:16px 0}
+  .highlight{background:linear-gradient(transparent 60%,rgba(34,211,238,.3) 60%);padding:0 2px}
+  @media print{.slide{page-break-after:always;min-height:0}}
+</style>
+</head>
+<body>
+
+<!-- 1 COVER -->
+<section class="slide cover">
+  <div class="brand">KWYRE · APOLLO VILLAGER</div>
+  <div class="slide-num">01 / 14</div>
+  <span class="pill">Seed Round · May 2026</span>
+  <h1>VILLAGER</h1>
+  <p class="tagline">The Authority Firewall for AI Agents</p>
+  <p class="lede">Prompt injection is the #1 risk to every AI agent in production. We make it architecturally impossible — by separating <span class="highlight">information from authority</span> at the source-to-sink level.</p>
+  <div class="meta">
+    <div><strong>Christian Kearney</strong>Founder & Inventor</div>
+    <div><strong>$6M Seed @ $30M post</strong>20% dilution · 18-month runway</div>
+    <div><strong>Patents</strong>KWYRE-2026-002-PROV + CIP (May 2026)</div>
+  </div>
+  <div class="footer"><span>villager.kwyre.ai</span><span>Confidential — for prospective investors only</span></div>
+</section>
+
+<!-- 2 PROBLEM -->
+<section class="slide">
+  <div class="brand">PROBLEM</div><div class="slide-num">02 / 14</div>
+  <h3>The unfixable vulnerability</h3>
+  <h2>Every AI agent in production is one email away from being weaponized.</h2>
+  <div class="grid g3">
+    <div class="card"><div class="stat bad">50–84%</div><div class="stat-label">Documented prompt-injection success rate; 100% in some commercial systems</div></div>
+    <div class="card"><div class="stat bad">#1</div><div class="stat-label">OWASP LLM Top 10 (2025) AND OWASP Agentic Top 10 (2026) — for the second consecutive edition</div></div> 
+    <div class="card"><div class="stat bad">97%</div><div class="stat-label">Of organizations that suffered AI-related breaches lacked AI access controls — IBM 2025</div></div>
+  </div>
+  <div class="quote">"Prompt injection in AI browsers may never be fully patched." — OpenAI, Feb 13, 2026<br>"LLMs are inherently confusable deputies." — UK NCSC, Dec 2025</div>
+  <p style="margin-top:20px;color:var(--muted);max-width:1000px">LLMs cannot architecturally distinguish trusted instructions from untrusted data.  Every web page, email, document, MCP response, browser DOM node, and tool output can carry hidden commands. Today's defenses — classifiers, regex, and "guardrails" — score text and miss the underlying architecture problem.</p>
+</section>
+
+<!-- 3 WHY NOW -->
+<section class="slide">
+  <div class="brand">WHY NOW</div><div class="slide-num">03 / 14</div>
+  <h3>The 12 months that changed everything</h3>
+  <h2>The threat went operational. Regulators armed up. CISOs got budget.</h2>
+  <div class="grid g2">
+    <div>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-date">JUN 11, 2025</div><div class="timeline-event"><strong>EchoLeak (CVE-2025-32711, CVSS 9.3)</strong> — first zero-click prompt injection in production AI (Microsoft 365 Copilot).  One email = silent exfiltration.</div></div>
+        <div class="timeline-item"><div class="timeline-date">AUG 27, 2025</div><div class="timeline-event"><strong>Anthropic GTG-2002 "Vibe Hacking"</strong> — single criminal extorted ≥17 orgs in one month  using Claude; ransoms >$500K.</div></div> 
+        <div class="timeline-item"><div class="timeline-date">NOV 5, 2025</div><div class="timeline-event"><strong>Google GTIG: PROMPTSTEAL + PROMPTFLUX</strong> — APT28 malware queries Qwen mid-attack;  self-modifying VBScript calls Gemini hourly.</div></div> 
+        <div class="timeline-item"><div class="timeline-date">NOV 13, 2025</div><div class="timeline-event"><strong>Anthropic GTG-1002</strong> — first AI-orchestrated state cyber-espionage at scale. ~30 targets. <span class="highlight">80–90% executed autonomously by Claude  via MCP.</span></div></div>
+        <div class="timeline-item"><div class="timeline-date">FEB 13, 2026</div><div class="timeline-event"><strong>OpenAI "Lockdown Mode"</strong> — public admission the problem may never be fully fixed.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card"><h3 style="color:var(--accent3)">Regulators armed</h3>
+        <ul>
+          <li><strong>EU AI Act:</strong> Penalty regime live Aug 2025 (€35M / 7% global turnover); full applicability Aug 2, 2026</li> 
+          <li><strong>HIPAA Security Rule overhaul:</strong> OCR final rule on May 2026 agenda; $9B first-year compliance</li> 
+          <li><strong>NIST AI 600-1 + Critical Infrastructure Profile</strong> (April 2026)</li>
+          <li><strong>SEC Item 1.05:</strong> 4-day cyber-incident disclosure for public co's</li> 
+        </ul>
+      </div>
+      <div class="card" style="margin-top:20px"><h3 style="color:var(--accent2)">Budgets followed</h3>
+        <ul>
+          <li>Enterprise gen-AI spend: <strong>$11.5B (2024) → $37B (2025)</strong>, +3.2× — Menlo Ventures</li>
+          <li><strong>78% of enterprise AI teams</strong> now run ≥1 MCP agent in production — Apr 2026</li>
+          <li>Gartner: <strong>40% of enterprise apps</strong> ship task-specific AI agents by end-2026 (from <5% in 2025)</li>
+          <li>Healthcare avg breach: <strong>$7.42M</strong>, 14 years running — IBM 2025</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 SOLUTION -->
+<section class="slide">
+  <div class="brand">SOLUTION</div><div class="slide-num">04 / 14</div>
+  <h3>Authority is not a string</h3>
+  <h2>VILLAGER separates <span style="color:var(--accent)">information</span> from <span style="color:var(--accent2)">authority</span> — at the source-to-sink level.</h2>
+  <p class="lede">Untrusted content can <em>inform</em> reasoning. It cannot supply authority-bearing arguments to state-changing or security-consequential actions. Period.</p>
+  <div class="grid g3" style="margin-top:20px">
+    <div class="card accent"><h3>Core firewall</h3><ul>
+      <li>Ingress sanitizer & semantic injection lens</li>
+      <li>Source-to-sink taint ledger</li>
+      <li>Argument-level authority gate</li>
+      <li>Tool manifest & egress broker</li>
+    </ul></div>
+    <div class="card accent"><h3>Cognitive terrain</h3><ul>
+      <li>Controlled cognitive terrain (decoy memory, decoy tools)</li>
+      <li>Deception / canary layer</li>
+      <li>Behavioral agent scorer</li>
+      <li>Runtime supervisor + dual-lane CaMeL</li>
+    </ul></div>
+    <div class="card accent"><h3>Evidence fabric (CIP)</h3><ul>
+      <li>HMAC-signed telemetry provenance</li>
+      <li>AI-BOM generation</li>
+      <li>Agentic SOC drafting & 24/7 alerting</li>
+      <li>Confidential-compute attestation</li>
+    </ul></div>
+  </div>
+  <p style="margin-top:24px;font-size:16px;color:var(--muted)">Patent portfolio: <strong style="color:var(--text)">KWYRE-2026-002-PROV</strong> (provisional, May 2026) + <strong style="color:var(--text)">KWYRE-2026-002-CIP</strong> (continuation-in-part, May 2026). Five claim families: argument-level authority gating, source-to-sink taint, controlled cognitive terrain, evidence fabric, dual-lane orchestration.</p>
+</section>
+
+<!-- 5 MARKET -->
+<section class="slide">
+  <div class="brand">MARKET SIZE</div><div class="slide-num">05 / 14</div>
+  <h3>TAM · SAM · SOM</h3>
+  <h2>A ~$15–20B realistic SAM across three converging segments.</h2>
+  <div class="grid g2">
+    <div>
+      <div class="chart-wrap"><canvas id="tamChart"></canvas></div>
+    </div>
+    <div>
+      <table>
+        <tr><th>Segment</th><th>SAM</th><th>5-yr SOM</th></tr>
+        <tr><td><strong>Consumer</strong><br><span style="color:var(--muted);font-size:13px">120–150M paying AI users × $120/yr</span></td><td>$14–18B</td><td>$75–180M</td></tr>
+        <tr><td><strong>Healthcare</strong><br><span style="color:var(--muted);font-size:13px">4,570 AI-enabled US hospitals + 400 IDNs</span></td><td>$1B US<br>$4B global</td><td>$45–60M</td></tr>
+        <tr><td><strong>AI Platform B2B</strong><br><span style="color:var(--muted);font-size:13px">Top 20 platforms + 1K agent cos + marketplace</span></td><td>$290M</td><td>$15–20M</td></tr>
+        <tr><td><strong>TOTAL</strong></td><td><strong>$15–20B</strong></td><td><strong>$135–260M</strong></td></tr>
+      </table>
+      <div class="card" style="margin-top:20px"><h3>Parent markets</h3>
+        <p><strong>AI TRiSM:</strong> $2.80B (2025) → $7.44B (2030), <strong>21.6% CAGR</strong> (Grand View)</p>
+        <p><strong>Prompt-injection sub-segment:</strong> $1.98B (2025) → $5.87B (2029), <strong>31.5% CAGR</strong> (Vectra)</p>
+        <p><strong>Agentic AI:</strong> $2.58B (2024) → $24.5B (2030), <strong>46.2% CAGR</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 PRODUCT / VALIDATION -->
+<section class="slide">
+  <div class="brand">TRACTION & VALIDATION</div><div class="slide-num">06 / 14</div>
+  <h3>Proof, not promises</h3>
+  <h2>79.2% average attacker withdrawal across 6-nation APT simulations.</h2>
+  <div class="grid g2">
+    <div><div class="chart-wrap"><canvas id="aptChart"></canvas></div></div>
+    <div>
+      <div class="card"><h3>Validated locally against</h3>
+        <ul>
+          <li><strong>GTG-1002</strong> (Anthropic Nov 2025 — China state-sponsored AI espionage)</li>
+          <li><strong>GTG-2002</strong> (Anthropic Aug 2025 — vibe-hacking extortion)</li>
+          <li><strong>EchoLeak</strong> (CVE-2025-32711, zero-click M365 Copilot)</li>
+          <li>Nmap · Cobalt Strike · XBOW · ORB proxies</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:20px"><h3>What this means</h3>
+        <p>VILLAGER's Cognitive Zero Trust platform repelled simulated attacks from <strong>every major nation-state APT cluster</strong> by manipulating the attacker's <em>cognitive environment</em> — not just blocking traffic.</p>
+        <p>The same primitives — argument-level gates, source-to-sink taint, cognitive terrain — that broke APT35 break EchoLeak. <span class="highlight">One architecture, every attack class.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 COMPETITION -->
+<section class="slide">
+  <div class="brand">COMPETITION</div><div class="slide-num">07 / 14</div>
+  <h3>Five capabilities no one else ships</h3>
+  <h2>The market built classifiers. We built architecture.</h2>
+  <p class="lede">Eight major AI-security exits in 2025 ($180M–$700M). Every acquirer bought a <em>content-layer firewall</em>. None bought structural agent-runtime defense. The window is open.</p>
+  <table style="margin-top:8px">
+    <tr><th>Capability</th><th>Lakera<br>(→Check Point)</th><th>Protect AI<br>(→PAN)</th><th>Prompt Sec<br>(→S1)</th><th>Aim<br>(→Cato)</th><th>MS Defender</th><th>Acalvio</th><th>VILLAGER</th></tr>
+    <tr><td>Info ≠ authority separation</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td>n/a</td><td class="check">✓</td></tr>
+    <tr><td>Argument-level tool gates</td><td class="x">✗</td><td class="partial">tool-level</td><td class="partial">MCP-level</td><td class="x">✗</td><td class="partial">agent-id</td><td>n/a</td><td class="check">✓</td></tr>
+    <tr><td>Source-to-sink taint</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td>n/a</td><td class="check">✓</td></tr>
+    <tr><td>AI cognitive-terrain deception</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td class="x">✗</td><td class="partial">network only</td><td class="check">✓</td></tr>
+    <tr><td>HMAC evidence fabric</td><td class="partial">logs</td><td class="partial">logs</td><td class="partial">logs</td><td class="partial">logs</td><td class="partial">audit</td><td class="partial">telemetry</td><td class="check">✓</td></tr>
+  </table>
+  <p style="margin-top:20px;color:var(--muted);font-size:15px">Sources: company filings, press releases, SEC 8-K (PANW, S1, F5), TechCrunch, Calcalist, GeekWire, SecurityWeek.</p>
+</section>
+
+<!-- 8 BUSINESS MODEL -->
+<section class="slide">
+  <div class="brand">BUSINESS MODEL</div><div class="slide-num">08 / 14</div>
+  <h3>Three revenue motions, one product</h3>
+  <h2>$9.99 consumer + $150K healthcare + $1.5M platform = compounding ARR.</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Consumer</h3><div class="stat">$9.99<span style="font-size:24px;color:var(--muted)">/mo</span></div><div class="stat-label">Freemium SaaS</div>
+      <p style="margin-top:14px;font-size:15px">Browser extension + native ChatGPT / Claude / Gemini protection. 14-day opt-out trial.</p>
+      <p style="font-size:14px;color:var(--muted)"><strong>CAC $50 · LTV $150 · 3.0× LTV/CAC</strong></p>
+    </div>
+    <div class="card"><h3>Healthcare</h3><div class="stat purple">$150K<span style="font-size:24px;color:var(--muted)"> ACV</span></div><div class="stat-label">Per-hospital annual license</div>
+      <p style="margin-top:14px;font-size:15px">Mid-market $75K · IDN $250–500K · AMC $500K–$1M. Sold direct + Vizient/Premier/HealthTrust GPOs.</p>
+      <p style="font-size:14px;color:var(--muted)"><strong>NRR 115% · HIPAA evidence layer</strong></p>
+    </div>
+    <div class="card"><h3>AI Platform B2B</h3><div class="stat amber">$1.5M<span style="font-size:24px;color:var(--muted)"> ACV</span></div><div class="stat-label">Top-20 platform license</div>
+      <p style="margin-top:14px;font-size:15px">Tier 1 (frontier labs) $1.5M · Tier 2 mid-market $300K · Tier 3 long-tail $75K + per-action usage.</p>
+      <p style="font-size:14px;color:var(--muted)"><strong>NRR 125% · embedded primitive</strong></p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:24px"><h3>Unit economics — base case</h3>
+    <p>Gross margin 70% Y1 → <strong>82% Y5</strong> · Burn multiple 3.0× Y1 → <strong>1.2× Y5</strong> · Rule of 40 reached Y4 · CAC payback ~18 months blended · Total capital required Y1–Y5: <strong>$80–120M</strong> (vs Lakera $30M, Protect AI $108M → $635M exit).</p>
+  </div>
+</section>
+
+<!-- 9 GTM -->
+<section class="slide">
+  <div class="brand">GO-TO-MARKET</div><div class="slide-num">09 / 14</div>
+  <h3>Three concentric flywheels</h3>
+  <h2>Land with frontier labs. Expand through GPOs. Distribute through marketplaces.</h2>
+  <div class="grid g3">
+    <div class="card"><h3 style="color:var(--accent)">Phase 1 · Marquee design partners</h3>
+      <p><strong>Target:</strong> Anthropic (best narrative fit), 1 cloud (AWS Bedrock or Azure AI Foundry), 1 agent-native platform (Cursor / Replit / Glean / Harvey).</p>
+      <p><strong>Hook:</strong> Anthropic publishes threat reports; VILLAGER provides the defense narrative for them.</p>
+      <p><strong>Timeline:</strong> 3 LOIs by Q4 2026.</p>
+    </div>
+    <div class="card"><h3 style="color:var(--accent2)">Phase 2 · Healthcare GPO channel</h3>
+      <p><strong>Direct:</strong> 3 AMC design partners Y1 (Mayo, Cleveland Clinic, or Kaiser tier).</p>
+      <p><strong>Channel:</strong> Vizient ($140B), Premier ($80B), HealthTrust ($50B) GPO contracts unlock ~$270B aggregate hospital spend after 18-month onboarding.</p>
+      <p><strong>Wedge:</strong> HIPAA Security Rule AI inventory + risk analysis evidence layer.</p>
+    </div>
+    <div class="card"><h3 style="color:var(--accent3)">Phase 3 · Consumer + marketplace</h3>
+      <p><strong>Distribution:</strong> Chrome/Edge/Safari extension stores; ProductHunt + Hacker News launches timed to named CVEs.</p>
+      <p><strong>Long tail:</strong> OpenAI Apps + Anthropic Marketplace = millions of SMB customers at $2–10K.</p>
+      <p><strong>Creator partnerships:</strong> Embrace The Red, Simon Willison, Pliny.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 FINANCIALS -->
+<section class="slide">
+  <div class="brand">FINANCIAL PROJECTIONS</div><div class="slide-num">10 / 14</div>
+  <h3>5-year ARR · Bull / Base / Bear</h3>
+  <h2>Base case: <span style="color:var(--accent)">$1.6M → $137M ARR</span> in 5 years (~205% CAGR).</h2>
+  <div class="grid g2">
+    <div><div class="chart-wrap" style="height:420px"><canvas id="arrChart"></canvas></div></div>
+    <div>
+      <table>
+        <tr><th>Year</th><th>Bear</th><th>Base</th><th>Bull</th></tr>
+        <tr><td>Y1</td><td>$0.3M</td><td><strong>$1.6M</strong></td><td>$3.8M</td></tr>
+        <tr><td>Y2</td><td>$1.6M</td><td><strong>$8.6M</strong></td><td>$20.4M</td></tr>
+        <tr><td>Y3</td><td>$4.5M</td><td><strong>$27.9M</strong></td><td>$65.9M</td></tr>
+        <tr><td>Y4</td><td>$13.2M</td><td><strong>$71.0M</strong></td><td>$159.5M</td></tr>
+        <tr><td>Y5</td><td>$27.4M</td><td><strong>$136.5M</strong></td><td>$334.0M</td></tr>
+      </table>
+      <div class="card" style="margin-top:20px"><h3>Year-5 segment mix (Base)</h3>
+        <div class="chart-wrap" style="height:200px"><canvas id="mixChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 COMPS / EXITS -->
+<section class="slide">
+  <div class="brand">EXIT COMPARABLES</div><div class="slide-num">11 / 14</div>
+  <h3>The acquirers are buying — but they bought the wrong layer</h3>
+  <h2>Eight AI-security exits in 2025. None acquired structural runtime defense.</h2>
+  <div class="grid g2">
+    <div><div class="chart-wrap" style="height:420px"><canvas id="exitChart"></canvas></div></div>
+    <div>
+      <table>
+        <tr><th>Target</th><th>Acquirer</th><th>Price</th><th>Date</th></tr>
+        <tr><td>Wiz</td><td>Google</td><td><strong>$32.0B</strong></td><td>Mar 2026</td></tr>
+        <tr><td>CyberArk</td><td>Palo Alto Networks</td><td>$25.0B</td><td>Jul 2025</td></tr>
+        <tr><td>Protect AI</td><td>Palo Alto Networks</td><td>~$635M</td><td>Jul 2025</td></tr>
+        <tr><td>Attivo</td><td>SentinelOne</td><td>$616M</td><td>May 2022</td></tr>
+        <tr><td>Robust Intelligence</td><td>Cisco</td><td>~$400M</td><td>Sep 2024</td></tr>
+        <tr><td>Aim Security</td><td>Cato Networks</td><td>~$350M</td><td>Sep 2025</td></tr>
+        <tr><td>Lakera</td><td>Check Point</td><td>~$300M</td><td>Sep 2025</td></tr>
+        <tr><td>Pangea</td><td>CrowdStrike</td><td>~$260M</td><td>Sep 2025</td></tr>
+        <tr><td>Prompt Security</td><td>SentinelOne</td><td>~$250M</td><td>Aug 2025</td></tr>
+        <tr><td>CalypsoAI</td><td>F5</td><td>$180M</td><td>Sep 2025</td></tr>
+        <tr><td>Apex Security</td><td>Tenable</td><td>~$100M</td><td>May 2025</td></tr>
+      </table>
+      <p style="margin-top:14px;color:var(--muted);font-size:14px">Implied multiples: 25–35× ARR for emerging-category strategic premia (Wiz ~32×, Protect AI ~25–30× est.). Median invested-capital multiple: <strong style="color:var(--text)">~10×</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 TEAM -->
+<section class="slide">
+  <div class="brand">TEAM</div><div class="slide-num">12 / 14</div>
+  <h3>Inventor-led, defense-credentialed</h3>
+  <h2>Christian Kearney — Founder, Inventor</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Sole inventor</h3>
+      <p>Architect of all five VILLAGER claim families. Provisional patent (KWYRE-2026-002-PROV) and CIP filed May 2026 covering argument-level authority gating, source-to-sink taint, controlled cognitive terrain, HMAC evidence fabric, and dual-lane CaMeL orchestration.</p>
+      <p>Built and validated the Cognitive Zero Trust platform against 6-nation APT simulations achieving 79.2% average withdrawal rate.</p>
+    </div>
+    <div class="card">
+      <h3>Hiring with this round</h3>
+      <ul>
+        <li><strong>VP Engineering</strong> — ex-Anthropic / OpenAI security / Palo Alto Networks AIRS</li>
+        <li><strong>Head of Healthcare GTM</strong> — ex-Imprivata / Claroty / Cynerio</li>
+        <li><strong>Head of Research</strong> — adversarial-ML + red-team background (ex-Robust / HiddenLayer profile)</li>
+        <li><strong>Founding engineers (4)</strong> — distributed systems, eBPF, MCP, compiler/static-analysis backgrounds</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:20px"><h3>Advisory board priority</h3>
+    <p>Recruiting CISOs from a top-3 US health system, a frontier AI lab, and a Fortune 100 financial services firm. Also pursuing former federal cyber officials (CISA / NSA Cybersecurity Directorate) and at least one issued-patent prosecution counsel.</p>
+  </div>
+</section>
+
+<!-- 13 ASK -->
+<section class="slide">
+  <div class="brand">THE ASK</div><div class="slide-num">13 / 14</div>
+  <h3>Seed round</h3>
+  <h2><span style="color:var(--accent)">$6M</span> at <span style="color:var(--accent)">$30M post-money</span> · 18-month runway</h2>
+  <div class="grid g4">
+    <div class="card"><div class="stat">50%</div><div class="stat-label">Engineering · $3.0M</div><p style="font-size:14px;margin-top:8px">GA firewall Q4 2026 · MCP integrations · evidence fabric · AutoRedTeamer · Agentic SOC</p></div>
+    <div class="card"><div class="stat purple">30%</div><div class="stat-label">Go-to-market · $1.8M</div><p style="font-size:14px;margin-top:8px">3 design-partner hospitals · 1 frontier-lab partnership · consumer beta 50K freemium</p></div>
+    <div class="card"><div class="stat amber">10%</div><div class="stat-label">IP & Research · $0.6M</div><p style="font-size:14px;margin-top:8px">Full patent prosecution · 8-nation APT deception research · defensive publications</p></div>
+    <div class="card"><div class="stat good">10%</div><div class="stat-label">Reserve · $0.6M</div><p style="font-size:14px;margin-top:8px">18-month runway buffer</p></div>
+  </div>
+  <div class="card accent" style="margin-top:30px">
+    <h3>Milestones to Series A (target Q4 2027 · $20–30M @ $80–120M post)</h3>
+    <ul>
+      <li><strong>$5–10M ARR</strong> run-rate across three segments</li>
+      <li><strong>3 healthcare logos</strong> signed · <strong>1 frontier AI platform</strong> license</li>
+      <li><strong>100K consumer freemium · 5K paid subs</strong></li>
+      <li><strong>Issued patent claims</strong> on argument-level authority gating</li>
+      <li><strong>SOC 2 Type II + HIPAA conformity</strong> attestation</li>
+    </ul>
+  </div>
+  <p style="margin-top:24px;color:var(--muted);font-size:15px;text-align:center">Target investors: <strong style="color:var(--text)">Ballistic · YL Ventures · Ten Eleven · Shield Capital · Paladin · Lightspeed · Bain Capital Ventures · Felicis · M12 · CrowdStrike Falcon Fund · SVCI</strong></p>
+</section>
+
+<!-- 14 CLOSE -->
+<section class="slide cover">
+  <div class="brand">CONTACT</div><div class="slide-num">14 / 14</div>
+  <h1 style="font-size:64px">The defender side of the<br>agentic AI revolution.</h1>
+  <p class="lede" style="font-size:22px;max-width:900px">Every AI agent shipping in 2026 needs an authority firewall. The acquirers have already proven the market — Palo Alto, Cisco, SentinelOne, Cato, Check Point, F5, Tenable, CrowdStrike all bought AI-security in 2025. None of them bought what we built.</p>
+  <div class="meta">
+    <div><strong>Christian Kearney</strong>Founder & Inventor</div>
+    <div><strong>christian@kwyre.ai</strong>villager.kwyre.ai</div>
+    <div><strong>$6M Seed</strong>Open through Q3 2026</div>
+  </div>
+  <p style="margin-top:60px;color:var(--muted);font-size:13px;max-width:900px">Sources cited throughout: Grand View Research · Mordor Intelligence · Precedence Research · Vectra AI · Menlo Ventures · Digital Applied · OWASP GenAI · NIST · OCR/HHS · EU Commission · Anthropic Threat Intelligence Reports (Aug + Nov 2025) · Google GTIG AI Threat Tracker (Nov 2025) · IBM Cost of a Data Breach 2025 · Carta · CB Insights · DataTribe · TechCrunch · Calcalist · SecurityWeek · GeekWire · SEC 8-K filings (PANW, SentinelOne, F5).</p>
+</section>
+
+<script>
+Chart.defaults.color='#94a3b8';Chart.defaults.borderColor='#1f2937';Chart.defaults.font.family='-apple-system,BlinkMacSystemFont,Inter,sans-serif';
+
+new Chart(document.getElementById('tamChart'),{
+  type:'bar',
+  data:{labels:['Consumer','Healthcare','AI Platform B2B'],
+    datasets:[
+      {label:'TAM ($B)',data:[240,22,5.5],backgroundColor:'rgba(168,85,247,0.6)'},
+      {label:'SAM ($B)',data:[16,2.5,0.29],backgroundColor:'rgba(34,211,238,0.6)'},
+      {label:'5-yr SOM ($M)',data:[0.13,0.05,0.02],backgroundColor:'rgba(245,158,11,0.8)'}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'TAM / SAM / SOM by segment ($B)',color:'#e5e7eb',font:{size:16}}},
+    scales:{y:{type:'logarithmic',title:{display:true,text:'$ Billions (log scale)'}}}}
+});
+
+new Chart(document.getElementById('aptChart'),{
+  type:'bar',
+  data:{labels:['Iran\nAPT35','India\nNTRO','China\nAPT41','N. Korea\nLazarus','Turkey\nMIT','Russia\nAPT28/29'],
+    datasets:[{label:'Attacker withdrawal rate (%)',
+      data:[100,82,80,75,75,65],
+      backgroundColor:['#10b981','#22d3ee','#22d3ee','#a855f7','#a855f7','#f59e0b']}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'Attacker withdrawal — 6-nation APT simulation (avg 79.2%)',color:'#e5e7eb',font:{size:16}},legend:{display:false}},
+    scales:{y:{min:0,max:100,title:{display:true,text:'% Withdrawal'}}}}
+});
+
+new Chart(document.getElementById('arrChart'),{
+  type:'line',
+  data:{labels:['Y1','Y2','Y3','Y4','Y5'],
+    datasets:[
+      {label:'Bull',data:[3.75,20.4,65.9,159.5,334],borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.1)',tension:0.3,fill:true,borderWidth:3},
+      {label:'Base',data:[1.6,8.6,27.9,71.0,136.5],borderColor:'#22d3ee',backgroundColor:'rgba(34,211,238,0.15)',tension:0.3,fill:true,borderWidth:3},
+      {label:'Bear',data:[0.32,1.6,4.5,13.2,27.4],borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.1)',tension:0.3,fill:true,borderWidth:3}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'5-year ARR projection ($M)',color:'#e5e7eb',font:{size:16}}},
+    scales:{y:{title:{display:true,text:'ARR ($M)'}}}}
+});
+
+new Chart(document.getElementById('mixChart'),{
+  type:'doughnut',
+  data:{labels:['Consumer $72M','Healthcare $30M','AI Platform B2B $34.5M'],
+    datasets:[{data:[72,30,34.5],backgroundColor:['#22d3ee','#a855f7','#f59e0b'],borderWidth:0}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:11},padding:8}}}}
+});
+
+new Chart(document.getElementById('exitChart'),{
+  type:'bar',
+  data:{labels:['Wiz/Google','CyberArk/PANW','Protect AI/PANW','Attivo/S1','Robust/Cisco','Aim/Cato','Lakera/CheckP','Pangea/CRWD','Prompt/S1','Calypso/F5','Apex/Tenable'],
+    datasets:[{label:'Exit price ($M)',
+      data:[32000,25000,635,616,400,350,300,260,250,180,100],
+      backgroundColor:['#a855f7','#a855f7','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee','#22d3ee']}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{title:{display:true,text:'AI / Cyber security M&A exits 2022–2026 ($M, log scale)',color:'#e5e7eb',font:{size:16}},legend:{display:false}},
+    scales:{x:{type:'logarithmic',title:{display:true,text:'$ Millions (log)'}}}}
+});
+</script>
+</body>
+</html>
